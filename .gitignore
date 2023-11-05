@@ -1,0 +1,23 @@
+node_modules
+.env
+.env.test
+coverage
+contracts-coverage
+coverage.json
+typechain
+dist
+deployments/localhost
+
+#Hardhat files
+cache
+artifacts
+
+#Remix files
+.deps
+
+#IDEs
+.idea
+.vscode
+
+#Coverage reports
+.nyc_output
