@@ -1,8 +1,14 @@
-import { HardhatUserConfig, task } from "hardhat/config";
+import * as dotenv from "dotenv";
+
+import { HardhatUserConfig } from "hardhat/config";
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "hardhat-deploy";
 import "hardhat-contract-sizer";
+
+dotenv.config({
+  ...(process.env.NODE_ENV === "test" && { path: ".env.test" }),
+});
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -23,11 +29,7 @@ const config: HardhatUserConfig = {
   },
   networks: {
     hardhat: {
-      deploy: ["./scripts/deploy/bsc/"],
       allowUnlimitedContractSize: true,
-    },
-    localhost: {
-      deploy: ["./scripts/deploy/ethereum/"],
     },
   },
   mocha: {
