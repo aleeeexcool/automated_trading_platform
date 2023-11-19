@@ -62,16 +62,30 @@ export const errorInfoCombined = (errorInfoArr: string[]): string => {
   return JSON.stringify(res, null, 2);
 };
 
-// TODO: fix this type
+// TODO: add another two variants
 const getStatusCode = (error: any, type: ErrorType): number => {
-  // if (isTooManyRequests(error)) return 429;
-  // if (isInternalServerError(error)) return 500;
+  if (isTooManyRequests(error)) return 429;
+  if (isInternalServerError(error)) return 500;
   // if (isTimeOutError(error)) return 408;
   // if (isBadGatewayError(error)) return 502;
 
   // return typeof error === "string"
   //   ? errorStatuses[type]
   //   : error.statusCode || errorStatuses[type];
+};
+
+const isTooManyRequests = (error: any) => {
+  return (
+    error.statusCode === 429 ||
+    JSON.stringify(error).toLowerCase().indexOf("too many requests") > -1
+  );
+};
+
+const isInternalServerError = (error: any) => {
+  return (
+    error.statusCode === 500 ||
+    JSON.stringify(error).toLowerCase().indexOf("internal server error") > -1
+  );
 };
 
 export const getErrorStatusCode = (err: Error): number | undefined => {
