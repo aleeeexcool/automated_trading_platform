@@ -6,6 +6,18 @@ export enum ErrorType {
   Config = "config",
 }
 
+const errorIds = {
+  [ErrorType.Request]: 0,
+  [ErrorType.RequestFormat]: 1,
+  [ErrorType.Config]: 2,
+};
+
+const errorStatuses = {
+  [ErrorType.Request]: 400,
+  [ErrorType.RequestFormat]: 400,
+  [ErrorType.Config]: 500,
+};
+
 export interface ErrorInfo {
   type: ErrorType;
   message: any;
@@ -50,15 +62,16 @@ export const errorInfoCombined = (errorInfoArr: string[]): string => {
   return JSON.stringify(res, null, 2);
 };
 
+// TODO: fix this type
 const getStatusCode = (error: any, type: ErrorType): number => {
-//   if (isTooManyRequests(error)) return 429;
-//   if (isInternalServerError(error)) return 500;
-//   if (isTimeOutError(error)) return 408;
-//   if (isBadGatewayError(error)) return 502;
+  // if (isTooManyRequests(error)) return 429;
+  // if (isInternalServerError(error)) return 500;
+  // if (isTimeOutError(error)) return 408;
+  // if (isBadGatewayError(error)) return 502;
 
-//   return typeof error === "string"
-//     ? errorStatuses[type]
-//     : error.statusCode || errorStatuses[type];
+  // return typeof error === "string"
+  //   ? errorStatuses[type]
+  //   : error.statusCode || errorStatuses[type];
 };
 
 export const getErrorStatusCode = (err: Error): number | undefined => {

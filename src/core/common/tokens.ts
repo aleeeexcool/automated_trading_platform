@@ -240,7 +240,7 @@ export const TOKENS: GenericToken[] = [
       [ChainId.BSC]: 18,
     },
     geckoId: "wrapped-beacon-eth",
-    geckoIdVsCurrency: "eth", // TODO check, when discover geckoIdVsCurrency nature
+    geckoIdVsCurrency: "eth",
     addresses: {
       [ChainId.MAINNET]: "0xa2E3356610840701BDf5611a53974510Ae27E2e1",
       [ChainId.BSC]: "0xa2E3356610840701BDf5611a53974510Ae27E2e1",
@@ -252,7 +252,7 @@ export const TOKENS: GenericToken[] = [
       [ChainId.MAINNET]: 18,
     },
     geckoId: "weth",
-    geckoIdVsCurrency: "eth", // TODO check, when discover geckoIdVsCurrency nature
+    geckoIdVsCurrency: "eth",
     addresses: {
       [ChainId.MAINNET]: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     },
@@ -263,7 +263,7 @@ export const TOKENS: GenericToken[] = [
       [ChainId.MAINNET]: 8,
     },
     geckoId: "wrapped-bitcoin",
-    geckoIdVsCurrency: "btc", // TODO check, when discover geckoIdVsCurrency nature
+    geckoIdVsCurrency: "btc",
     addresses: {
       [ChainId.MAINNET]: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
     },
@@ -412,7 +412,7 @@ export const getTokenById = (
   if (!token) {
     throw new Error(
       errorInfo({
-        type: "", // TODO: add ErrorType
+        type: ErrorType.Config,
         message: "Invalid tokenId",
         debug: {
           module: __filename,
@@ -434,7 +434,7 @@ export const getTokenByAddress = (
   if (!token) {
     throw new Error(
       errorInfo({
-        type: "", // TODO: add ErrorType.Config
+        type: ErrorType.Config,
         message: "Invalid token address",
         debug: {
           module: __filename,
