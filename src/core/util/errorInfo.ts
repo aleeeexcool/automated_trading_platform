@@ -1,4 +1,4 @@
-// import { isDevMode } from "./isDevMode";
+import { isDevMode } from "./isDevMode";
 
 export enum ErrorType {
   Request = "request",
@@ -39,7 +39,7 @@ export const errorInfo = (params: ErrorInfo): string => {
           ? params.message
           : params.message.message,
       ...(params.provider ? { provider: params.provider } : {}),
-      ...("isDevMode" && params.debug // TODO: isDevMode specify
+      ...(isDevMode && params.debug
         ? {
             debug: {
               ...(params.debug.module ? { module: params.debug.module } : {}),
