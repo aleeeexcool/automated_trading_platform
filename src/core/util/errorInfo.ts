@@ -62,16 +62,15 @@ export const errorInfoCombined = (errorInfoArr: string[]): string => {
   return JSON.stringify(res, null, 2);
 };
 
-// TODO: add another two variants
 const getStatusCode = (error: any, type: ErrorType): number => {
   if (isTooManyRequests(error)) return 429;
   if (isInternalServerError(error)) return 500;
-  // if (isTimeOutError(error)) return 408;
-  // if (isBadGatewayError(error)) return 502;
+  if (isTimeOutError(error)) return 408;
+  if (isBadGatewayError(error)) return 502;
 
-  // return typeof error === "string"
-  //   ? errorStatuses[type]
-  //   : error.statusCode || errorStatuses[type];
+  return typeof error === "string"
+    ? errorStatuses[type]
+    : error.statusCode || errorStatuses[type];
 };
 
 const isTooManyRequests = (error: any) => {
@@ -85,6 +84,20 @@ const isInternalServerError = (error: any) => {
   return (
     error.statusCode === 500 ||
     JSON.stringify(error).toLowerCase().indexOf("internal server error") > -1
+  );
+};
+
+const isTimeOutError = (error: any) => {
+  return (
+    error.statusCode === 408 ||
+    JSON.stringify(error).toLowerCase().indexOf("timeout") > -1
+  );
+};
+
+const isBadGatewayError = (error: any) => {
+  return (
+    error.statusCode === 502 ||
+    JSON.stringify(error).toLowerCase().indexOf("bad gateway") > -1
   );
 };
 
