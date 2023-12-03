@@ -87,6 +87,7 @@ export const TOKENS: GenericToken[] = [
     decimals: {
       [ChainId.MAINNET]: 6,
       [ChainId.BSC]: 18,
+      // CRONO here and all after
     },
     geckoId: "usd-coin",
     geckoIdVsCurrency: "usd",
