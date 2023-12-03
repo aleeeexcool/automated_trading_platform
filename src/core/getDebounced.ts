@@ -23,6 +23,10 @@ export const getDebounced = async <T>(func: () => Promise<T>): Promise<T> => {
           reject(err);
         }
       })
+      .finally(() => {
+        waitingForResults[functionKey] = [];
+        proceeding[functionKey] = false;
+      });
   }
 
   return result as Promise<T>;

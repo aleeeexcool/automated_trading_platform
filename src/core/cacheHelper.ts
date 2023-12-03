@@ -33,7 +33,17 @@ export const CacheHelper = (() => {
       get,
     };
   };
-  // TODO: continue with instance
-  // let instance;
+  let instance: {
+    set: <T>(key: string, value: T, ttl?: number) => Promise<void>;
+    get: <T>(key: string, fallbackResult?: T) => Promise<T | null>;
+  };
+  return {
+    getInstance() {
+      if (!instance) {
+        instance = CacheImpl();
+      }
+      return instance;
+    },
+  };
 })();
 
