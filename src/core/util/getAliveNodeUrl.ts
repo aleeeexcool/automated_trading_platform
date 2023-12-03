@@ -3,6 +3,7 @@ import BigNumber from "bignumber.js";
 import { ChainId } from "../common/chainId";
 import { logger } from "../logger";
 import { errorInfo, ErrorType } from "./errorInfo";
+import { NETWORK_RPC_URLS } from "../common/constants";
 
 interface NodeStats {
   node: string;
@@ -76,10 +77,6 @@ const allSettled = async <T>(
     ) as Promise<SettledPromiseResult<T>>;
   });
   return Promise.all(wrappedPromises);
-};
-
-const NETWORK_RPC_URLS: { [key in ChainId]?: string[] } = {
-  [ChainId.MAINNET]: [`https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`],
 };
 
 export const getAliveNodeUrl = async (chainId: ChainId): Promise<string> => {
