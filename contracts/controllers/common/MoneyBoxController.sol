@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
+pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
@@ -15,9 +16,11 @@ contract MoneyBoxController {
     using Address for address;
     using SafeMath for uint256;
 
-    IMoneyBox public moneyBox;
+    IMoneyBox public immutable moneyBox;
 
-    constructor(IMoneyBox _moneyBox) {
+    constructor(
+        IMoneyBox _moneyBox) {
+        require(address(_moneyBox) != address(0), "INVALID_MONEY_BOX");
         moneyBox = _moneyBox;
     }
 
@@ -35,7 +38,7 @@ contract MoneyBoxController {
 
     /// @dev Calls to external contract
     /// @param data Bytes containing amount, pool id
-    function _deploy(bytes calldata data) external returns (uint, uint) {
+    function deploy(bytes calldata data) external returns (uint, uint) {
         (
             address token,
             uint256 amount
@@ -43,6 +46,23 @@ contract MoneyBoxController {
             data,
             (address, uint256)
         );
+        return _deploy(token, amount);
+    }
+
+    /// @notice Deploys all possible liquidity
+    /// @dev Calls to external contract
+    function deployAll(bytes calldata data) external returns (uint, uint) {
+        (
+            address token
+        ) = abi.decode(
+            data,
+            (address)
+        );
+        uint amount = IERC20(token).balanceOf(address(this));
+        return _deploy(token, amount);
+    }
+
+    function _deploy(address token, uint amount) internal returns (uint, uint) {
         if (amount == 0) {
             uint b = getBalance(token, address(this));
             return (b, b);
