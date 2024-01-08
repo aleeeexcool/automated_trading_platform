@@ -967,5 +967,43 @@ contract PancakeStableSwapLP is ERC20 {
 }
 
 contract PancakeStableSwap is Ownable, ReentrancyGuard {
+    using SafeERC20 for IERC20;
+
+    uint256 public constant N_COINS = 2;
+
+    uint256[N_COINS] public PRECISION_MUL;
+    uint256[N_COINS] public RATES;
+
+    address[N_COINS] public coins;
+    uint256[N_COINS] public balances;
+    uint256 public fee;
+    uint256 public admin_fee;
+
+    PancakeStableSwapLP public token;
+
+    uint256 public initial_A;
+    uint256 public future_A;
+    uint256 public initial_A_time;
+    uint256 public future_A_time;
+
+    uint256 public kill_deadline;
+    uint256 public constant KILL_DEADLINE_DT = 2 * 30 days;
+    bool public is_killed;
+
+    address public immutable STABLESWAP_FACTORY;
+    bool public isInitialized;
+
+    event TokenExchange(
+        address indexed buyer,
+        uint256 sold_id,
+        uint256 tokens_sold,
+        uint256 bought_id,
+        uint256 tokens_bought
+    );
+
+    constructor() {
+        STABLESWAP_FACTORY = msg.sender;
+    }
+
     
 }
